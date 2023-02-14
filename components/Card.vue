@@ -2,10 +2,11 @@
 const props = defineProps({
   modelValue: {
     default: {
+      id: 0,
       x: 0,
       y: 0,
-      width: 200,
-      height: 200,
+      width: 100,
+      height: 100,
     },
   },
 })
@@ -15,7 +16,7 @@ const emit = defineEmits(['update:modelValue'])
 
 <template>
   <div
-    class="absolute bg-red-50 rounded-md"
+    class="absolute bg-blue-200 rounded-md flex justify-center items-center text-5xl"
     :style="{
       left: `${props.modelValue.x}px`,
       top: `${props.modelValue.y}px`,
@@ -23,7 +24,7 @@ const emit = defineEmits(['update:modelValue'])
       height: `${props.modelValue.height}px`,
     }"
   >
-    card
+    {{ props.modelValue.id }}
   </div>
 </template>
 
