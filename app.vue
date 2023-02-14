@@ -21,9 +21,13 @@ html, body , #__nuxt{
   margin: 0;
   padding: 0;
 }
+html.light{
+  background: #FFFEFC;
+  color: black ;
+}
 
 html.dark {
-  background: #222;
+  background: #222 !important;
   color: white;
 }
 </style>
