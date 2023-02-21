@@ -2,7 +2,7 @@
 const props = defineProps({
   modelValue: {
     default: {
-      id: 0,
+      id: '0',
       x: 0,
       y: 0,
       width: 100,
@@ -11,12 +11,13 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:modelValue'])
+
 // emit('update:modelValue', [key])
 </script>
 
 <template>
   <div
-    class="absolute bg-blue-200 rounded-md flex justify-center items-center text-5xl"
+    class="absolute bg-blue-200 rounded-md flex justify-center items-center text-5xl select-none"
     :style="{
       left: `${props.modelValue.x}px`,
       top: `${props.modelValue.y}px`,

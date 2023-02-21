@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { initGridContainer } from './GridContainer'
 enum IMode {
   Drag = 'Drag',
   Rotate = 'Rotate',
@@ -7,73 +8,48 @@ enum IMode {
 type ScaleType = 'top' | 'bottom' | 'left' | 'right' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | null
 
 type ModeTypes = keyof typeof IMode
-const transformMode: ModeTypes | null = null
-const currentScaleType: ScaleType = null
-let previousEvent: MouseEvent | null = null
-let mouseFrom: { x: number; y: number } = { x: 0, y: 0 }
-const dragCanvasRef = ref<HTMLElement | undefined>()
-function addMouseEvent() {
-  if (dragCanvasRef.value instanceof HTMLElement) {
-    dragCanvasRef.value.addEventListener('mousedown', mousedown, false)
-    dragCanvasRef.value.addEventListener('mouseup', mouseup, false)
-    dragCanvasRef.value.addEventListener('mousemove', mousemove, false)
-  }
-}
-// 1.添加监听事件
+
+const gridCells = ref(
+  [
+    {
+      id: '0',
+      x: 0,
+      y: 0,
+      width: 100,
+      height: 100,
+    },
+    {
+      id: '1',
+      x: 300,
+      y: 0,
+      width: 100,
+      height: 100,
+    },
+  ],
+
+)
+
+const attachedLine: Ref<{ l: any[]; mv: any[];r: any[];t: any[];mh: any[];b: any[] } > = ref({ l: [], mv: [], r: [], t: [], mh: [], b: [] })
+const currentClickedElement: Ref<any> = ref()
+// 1.初始化盒子，给盒子添加鼠标点击事件
+const gridContainerRef = ref()
 onMounted(() => {
-  addMouseEvent()
+  initGridContainer(gridContainerRef, gridCells, currentClickedElement, attachedLine)
 })
-
-const cardOptionArray = ref([
-  {
-    id: 0,
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-  },
-  {
-    id: 1,
-    x: 300,
-    y: 0,
-    width: 100,
-    height: 100,
-  },
-])
-function mousedown(e: MouseEvent) {
-  mouseFrom = { x: e.clientX, y: e.clientY }
-  previousEvent = e
-}
-
-function mousemove(e: MouseEvent) {
-  previousEvent = null
-}
-function mouseup(e: MouseEvent) {
-  previousEvent = null
-}
 </script>
 
 <template>
   <div>
-    <!-- <Logos mb-6 /> -->
-    <!-- <Suspense>
-      <PageView />
-      <template #fallback>
-        <div op50 italic>
-          <span animate-pulse>Loading...</span>
-        </div>
-      </template>
-    </Suspense>
-    <InputEntry /> -->
-
-    <DragCanvas>
-      <div ref="dragCanvasRef" class="h-60vh w-80vw relative">
-        <Card
-          v-for="item, index in cardOptionArray"
-          :key="item.id"
-          v-model="cardOptionArray[index]"
-        />
-      </div>
-    </DragCanvas>
+    <!-- <DragCanvas> -->
+    <div ref="gridContainerRef" class="h-60vh w-80vw relative border mx-auto">
+      <Card
+        v-for="item, index in gridCells"
+        :id="`${item.id}`"
+        :key="item.id"
+        v-model="gridCells[index]"
+        :class="`card-item_${item.id}`"
+      />
+    </div>
+    <!-- </DragCanvas> -->
   </div>
 </template>
