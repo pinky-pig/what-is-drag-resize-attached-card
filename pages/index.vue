@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { initGridContainer } from './GridContainer'
+import BoundsSVGContainer from './BoundsSVGContainer.vue'
 enum IMode {
   Drag = 'Drag',
   Rotate = 'Rotate',
@@ -49,6 +50,7 @@ onMounted(() => {
         v-model="gridCells[index]"
         :class="`card-item_${item.id}`"
       />
+      <BoundsSVGContainer v-model="currentClickedElement" :current-clicked-element="currentClickedElement" :attached-line="attachedLine" />
     </div>
     <!-- </DragCanvas> -->
   </div>
