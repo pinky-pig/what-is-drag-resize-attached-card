@@ -13,15 +13,15 @@ const DEVIATION = 5
 let mouseFrom = { x: 0, y: 0 }
 let mouseTo = { x: 0, y: 0 }
 // 获取盒子 container 范围
+let isMouseInContainerOutside = ref(false)
+// const containerRefBounds = { x: 0, y: 0, width: 0, height: 0 }
+// const domBounds = containerRef.value.getBoundingClientRect()
+// Object.assign(containerRefBounds, domBounds)
 const elementLimitSize = {
-  minX: 0,
-  minY: 0,
-  maxX: 0,
-  maxY: 0,
-  minWidth: 10,
-  minHeight: 10,
-  maxWidth: 100,
-  maxHeight: 100,
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
 }
 export function initGridContainer(
   containerRef: Ref<HTMLElement>,
@@ -30,13 +30,38 @@ export function initGridContainer(
   adsorbedLine: Ref<{ l: any[]; mv: any[]; r: any[]; t: any[]; mh: any[]; b: any[] }>,
   option: any,
 ) {
+  isMouseInContainerOutside = useMouseInElement(containerRef).isOutside
+  watch(isMouseInContainerOutside, (v) => {
+    // if (v)
+    //   transformMode = null
+  })
+  watch(currentClickedElement, (nVal) => {
+    if (nVal) {
+      if (nVal.x < elementLimitSize.x)
+        nVal.x = elementLimitSize.x
+      if (nVal.y < elementLimitSize.y)
+        nVal.y = elementLimitSize.y
+      if ((nVal.x + nVal.width) > elementLimitSize.width)
+        nVal.x = elementLimitSize.width - nVal.width
+      if ((nVal.y + nVal.height) > elementLimitSize.height)
+        nVal.y = elementLimitSize.height - nVal.height
+      if (nVal.width <= 10)
+        nVal.width = 10
+      if (nVal.height <= 10)
+        nVal.height = 10
+    }
+  },
+  {
+    deep: true,
+  })
+
   useResizeObserver(containerRef, (entries) => {
     const entry = entries[0]
-    const { width, height } = entry.contentRect
-    elementLimitSize.maxX = width - (currentClickedElement.value?.width || 0)
-    elementLimitSize.maxY = height - (currentClickedElement.value?.height || 0)
-    elementLimitSize.maxWidth = width - 200
-    elementLimitSize.maxHeight = height - 200
+    const bounds = entry.contentRect
+    elementLimitSize.x = bounds.x
+    elementLimitSize.y = bounds.y
+    elementLimitSize.width = bounds.width
+    elementLimitSize.height = bounds.height
   })
 
   // 1.绑定鼠标事件
