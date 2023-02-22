@@ -11,6 +11,17 @@ const props = defineProps({
   resizable: {
     default: true,
   },
+  // 吸附线
+  adsorbOption: {
+    default: {
+      adsorbCols: true, // 吸附列
+      adsorbRows: true, // 吸附行
+      adsorbedLineStyle: {
+        background: 'green',
+        width: '2px',
+      },
+    },
+  },
 })
 
 const gridCells = inject('gridCells') as Ref<{ id: string; x: number; y: number; width: number; height: number }[]>

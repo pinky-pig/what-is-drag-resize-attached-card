@@ -12,7 +12,7 @@ provide('gridCells', gridCells)
   <GridContainer
     :grid-cells="gridCells"
     :draggable="true"
-    :resizable="false"
+    :resizable="true"
     class="h-60vh w-80vw relative border mx-auto"
   >
     <Card

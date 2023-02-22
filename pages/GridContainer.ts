@@ -12,19 +12,42 @@ let currentScaleType: ScaleType = null
 const DEVIATION = 5
 let mouseFrom = { x: 0, y: 0 }
 let mouseTo = { x: 0, y: 0 }
+// 获取盒子 container 范围
+const elementLimitSize = {
+  minX: 0,
+  minY: 0,
+  maxX: 0,
+  maxY: 0,
+  minWidth: 10,
+  minHeight: 10,
+  maxWidth: 100,
+  maxHeight: 100,
+}
 export function initGridContainer(
-  containerDom: Ref<HTMLElement>,
+  containerRef: Ref<HTMLElement>,
   gridCells: Ref<{ id: string; x: number; y: number; width: number; height: number }[]>,
   currentClickedElement: Ref<any>,
   adsorbedLine: Ref<{ l: any[]; mv: any[]; r: any[]; t: any[]; mh: any[]; b: any[] }>,
   option: any,
 ) {
+  useResizeObserver(containerRef, (entries) => {
+    const entry = entries[0]
+    const { width, height } = entry.contentRect
+    elementLimitSize.maxX = width - (currentClickedElement.value?.width || 0)
+    elementLimitSize.maxY = height - (currentClickedElement.value?.height || 0)
+    elementLimitSize.maxWidth = width - 200
+    elementLimitSize.maxHeight = height - 200
+  })
+
   // 1.绑定鼠标事件
   addMouseEvent()
   function addMouseEvent() {
-    containerDom.value.addEventListener('mousedown', mousedown, false)
-    containerDom.value.addEventListener('mouseup', mouseup, false)
-    containerDom.value.addEventListener('mousemove', mousemove, false)
+    window.addEventListener('mousedown', mousedown, false)
+    window.addEventListener('mousemove', mousemove, false)
+    window.addEventListener('mouseup', mouseup, false)
+    // containerRef.value.addEventListener('mousedown', mousedown, false)
+    // containerRef.value.addEventListener('mousemove', mousemove, false)
+    // containerRef.value.addEventListener('mouseup', mouseup, false)
   }
   function mousedown(e: MouseEvent) {
     mouseFrom = { x: e.clientX, y: e.clientY }
@@ -44,8 +67,16 @@ export function initGridContainer(
     else {
       // 点击的是block
       currentClickedElement.value = getCellObjectInStoreFromPosition(mouseFrom)
-      if (currentClickedElement.value)
+
+      // 将点击的 block 置顶
+      if (currentClickedElement.value) {
         transformMode = 'Drag'
+        const index = gridCells.value.findIndex(ele => ele.id === currentClickedElement.value.id)
+        if (index !== -1) {
+          const ele = gridCells.value.splice(index, 1)
+          gridCells.value.push(ele[0])
+        }
+      }
     }
   }
   function mousemove(e: MouseEvent) {
@@ -634,6 +665,7 @@ export function initGridContainer(
     }
   }
   function mouseup(_e: MouseEvent) {
+    transformMode = null
     mouseFrom.x = 0
     mouseFrom.y = 0
     for (const key in adsorbedLine.value)
