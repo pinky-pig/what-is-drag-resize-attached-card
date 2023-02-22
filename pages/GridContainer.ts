@@ -45,10 +45,18 @@ export function initGridContainer(
         nVal.x = elementLimitSize.width - nVal.width
       if ((nVal.y + nVal.height) > elementLimitSize.height)
         nVal.y = elementLimitSize.height - nVal.height
-      if (nVal.width <= 10)
-        nVal.width = 10
-      if (nVal.height <= 10)
-        nVal.height = 10
+      if (nVal.width <= 30 && currentScaleType === 'left') {
+        nVal.x += nVal.width - 30
+        nVal.width = 30
+      }
+      if (nVal.width <= 30 && currentScaleType === 'right')
+        nVal.width = 30
+      if (nVal.height <= 30 && currentScaleType === 'top') {
+        nVal.y += nVal.height - 30
+        nVal.height = 30
+      }
+      if (nVal.height <= 30 && currentScaleType === 'bottom')
+        nVal.height = 30
     }
   },
   {
