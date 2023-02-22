@@ -10,9 +10,6 @@ const props = defineProps({
     },
   },
 })
-const emit = defineEmits(['update:modelValue'])
-
-// emit('update:modelValue', [key])
 </script>
 
 <template>
