@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { initGridContainer } from './GridContainer'
 import BoundsSVGContainer from './BoundsSVGContainer.vue'
-enum IMode {
-  Drag = 'Drag',
-  Rotate = 'Rotate',
-  Scale = 'Scale',
-}
-type ScaleType = 'top' | 'bottom' | 'left' | 'right' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | null
-
-type ModeTypes = keyof typeof IMode
 
 const gridCells = ref(
   [
