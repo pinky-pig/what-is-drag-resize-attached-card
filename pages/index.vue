@@ -6,6 +6,7 @@ const gridCells = ref(
   [
     {
       id: '0',
+      index: 0,
       x: 0,
       y: 0,
       width: 100,
@@ -13,6 +14,7 @@ const gridCells = ref(
     },
     {
       id: '1',
+      index: 1,
       x: 300,
       y: 0,
       width: 100,

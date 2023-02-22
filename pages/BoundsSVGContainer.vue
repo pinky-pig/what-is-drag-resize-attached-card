@@ -360,8 +360,6 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
 </script>
 
 <template>
-  <!-- v-show="props.currentClickedElement"  -->
-  <!-- class="pointer-events-none w-screen h-screen fixed top-0 left-0"> -->
   <svg
     v-show="props.currentClickedElement"
     id="boundsSVGContainer"
