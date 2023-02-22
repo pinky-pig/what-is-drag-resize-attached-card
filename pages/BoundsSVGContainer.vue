@@ -12,7 +12,7 @@ interface GridCellType {
   children?: any
 }
 
-const props = defineProps(['currentClickedElement', 'attachedLine'])
+const props = defineProps(['currentClickedElement', 'adsorbedLine'])
 // const emits = defineEmits(['update:modelValue'])
 const borderWidth = 10
 
@@ -132,7 +132,7 @@ const rectCornerScaleData = ref([
 
 // 4.六条吸附线，左中右上中下
 const defaultAttachedLine = { x1: 0, y1: 0, x2: 0, y2: 0 }
-const attachedLineData = ref({
+const adsorbedLineData = ref({
   l: { name: 'left', ...defaultAttachedLine },
   mv: { name: 'middleVertical', ...defaultAttachedLine },
   r: { name: 'right', ...defaultAttachedLine },
@@ -140,7 +140,7 @@ const attachedLineData = ref({
   mh: { name: 'middleHorizontal', ...defaultAttachedLine },
   b: { name: 'bottom', ...defaultAttachedLine },
 })
-watch(props.attachedLine, (v) => {
+watch(props.adsorbedLine, (v) => {
   handleAttachedLineLeft(v.l)
   handleAttachedLineRight(v.r)
   handleAttachedLineMiddleVertical(v.mv)
@@ -179,15 +179,15 @@ function handleAttachedLineLeft(leftArr: any[]) {
         maxY = Math.max(maxY, rect.y + rect.height)
       }
     }
-    attachedLineData.value.l.x1 = xPosition
-    attachedLineData.value.l.y1 = minY
-    attachedLineData.value.l.x2 = xPosition
-    attachedLineData.value.l.y2 = maxY
+    adsorbedLineData.value.l.x1 = xPosition
+    adsorbedLineData.value.l.y1 = minY
+    adsorbedLineData.value.l.x2 = xPosition
+    adsorbedLineData.value.l.y2 = maxY
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.l[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.l[key] = 0
   }
 }
 // 监听右吸附线的位置
@@ -213,15 +213,15 @@ function handleAttachedLineRight(rightArr: any[]) {
         maxY = Math.max(maxY, rect.y + rect.height)
       }
     }
-    attachedLineData.value.r.x1 = xPosition + clickedElementRect.width
-    attachedLineData.value.r.y1 = minY
-    attachedLineData.value.r.x2 = xPosition + clickedElementRect.width
-    attachedLineData.value.r.y2 = maxY
+    adsorbedLineData.value.r.x1 = xPosition + clickedElementRect.width
+    adsorbedLineData.value.r.y1 = minY
+    adsorbedLineData.value.r.x2 = xPosition + clickedElementRect.width
+    adsorbedLineData.value.r.y2 = maxY
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.r[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.r[key] = 0
   }
 }
 // 监听中间吸附线的位置
@@ -246,15 +246,15 @@ function handleAttachedLineMiddleVertical(middleVerticalArr: any[]) {
         maxY = Math.max(maxY, rect.y + rect.height)
       }
     }
-    attachedLineData.value.mv.x1 = xPosition
-    attachedLineData.value.mv.y1 = minY
-    attachedLineData.value.mv.x2 = xPosition
-    attachedLineData.value.mv.y2 = maxY
+    adsorbedLineData.value.mv.x1 = xPosition
+    adsorbedLineData.value.mv.y1 = minY
+    adsorbedLineData.value.mv.x2 = xPosition
+    adsorbedLineData.value.mv.y2 = maxY
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.mv[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.mv[key] = 0
   }
 }
 // 监听上吸附线的位置
@@ -280,15 +280,15 @@ function handleAttachedLineTop(topArr: any[]) {
         maxX = Math.max(maxX, rect.x + rect.width)
       }
     }
-    attachedLineData.value.t.x1 = minX
-    attachedLineData.value.t.y1 = yPosition
-    attachedLineData.value.t.x2 = maxX
-    attachedLineData.value.t.y2 = yPosition
+    adsorbedLineData.value.t.x1 = minX
+    adsorbedLineData.value.t.y1 = yPosition
+    adsorbedLineData.value.t.x2 = maxX
+    adsorbedLineData.value.t.y2 = yPosition
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.t[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.t[key] = 0
   }
 }
 // 监听下吸附线的位置
@@ -314,15 +314,15 @@ function handleAttachedLineBottom(bottomArr: any[]) {
         maxX = Math.max(maxX, rect.x + rect.width)
       }
     }
-    attachedLineData.value.b.x1 = minX
-    attachedLineData.value.b.y1 = yPosition + clickedElementRect.height
-    attachedLineData.value.b.x2 = maxX
-    attachedLineData.value.b.y2 = yPosition + clickedElementRect.height
+    adsorbedLineData.value.b.x1 = minX
+    adsorbedLineData.value.b.y1 = yPosition + clickedElementRect.height
+    adsorbedLineData.value.b.x2 = maxX
+    adsorbedLineData.value.b.y2 = yPosition + clickedElementRect.height
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.b[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.b[key] = 0
   }
 }
 function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
@@ -346,15 +346,15 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
         maxX = Math.max(maxX, rect.x + rect.width)
       }
     }
-    attachedLineData.value.mh.x1 = minX
-    attachedLineData.value.mh.y1 = yPosition
-    attachedLineData.value.mh.x2 = maxX
-    attachedLineData.value.mh.y2 = yPosition
+    adsorbedLineData.value.mh.x1 = minX
+    adsorbedLineData.value.mh.y1 = yPosition
+    adsorbedLineData.value.mh.x2 = maxX
+    adsorbedLineData.value.mh.y2 = yPosition
   }
   else {
     // 将线条位置置为0
-    for (const key in attachedLineData.value.l)
-      attachedLineData.value.mh[key] = 0
+    for (const key in adsorbedLineData.value.l)
+      adsorbedLineData.value.mh[key] = 0
   }
 }
 </script>
@@ -418,7 +418,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
     <!-- 吸附线 -->
     <g class="pointer-events-auto">
       <line
-        v-for="(item, index) in Object.values(attachedLineData)"
+        v-for="(item, index) in Object.values(adsorbedLineData)"
         :key="item.name + index"
         :x1="item?.x1 || 0"
         :y1="item?.y1 || 0"

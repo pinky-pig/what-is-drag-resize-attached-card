@@ -9,7 +9,12 @@ provide('gridCells', gridCells)
 </script>
 
 <template>
-  <GridContainer :grid-cells="gridCells" class="h-60vh w-80vw relative border mx-auto">
+  <GridContainer
+    :grid-cells="gridCells"
+    :draggable="true"
+    :resizable="false"
+    class="h-60vh w-80vw relative border mx-auto"
+  >
     <Card
       v-for="item, index in gridCells"
       :id="`${item.id}`"
