@@ -2,7 +2,6 @@
 import type { GridCellsType, GridContainerProps } from './GridContainer'
 import { initGridContainer } from './GridContainer'
 import BoundsSVGContainer from './BoundsSVGContainer.vue'
-
 const props: GridContainerProps = defineProps({
   gridCells: {
     default: [
@@ -25,7 +24,13 @@ const props: GridContainerProps = defineProps({
 })
 const emit = defineEmits(['dragging', 'dragStart', 'dragEnd', 'resizing', 'resizeStart', 'resizeEnd'])
 
-const gridCells = ref(props.gridCells)
+const gridCells = ref(props.gridCells.map((cell) => {
+  return Object.assign(
+    cell,
+    { component: importComponent(cell.component) },
+  )
+}))
+
 const adsorbedLine: Ref<{ l: any[]; mv: any[];r: any[];t: any[];mh: any[];b: any[] } > = ref({ l: [], mv: [], r: [], t: [], mh: [], b: [] })
 const currentClickedElement: Ref<any> = ref()
 // 1.初始化盒子，给盒子添加鼠标点击事件
@@ -33,6 +38,9 @@ const gridContainerRef = ref()
 onMounted(() => {
   initGridContainer(gridContainerRef, gridCells, currentClickedElement, adsorbedLine, props, emit)
 })
+function importComponent(path: string) {
+  return shallowRef(defineAsyncComponent(() => import(path)))
+}
 </script>
 
 <template>
