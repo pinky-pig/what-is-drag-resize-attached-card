@@ -94,6 +94,38 @@ export function initGridContainer(
         }
         if (nVal.height <= 30 && currentScaleType === 'bottom')
           nVal.height = 30
+        if (currentScaleType === 'top_left') {
+          if (nVal.width <= 30) {
+            nVal.x += nVal.width - 30
+            nVal.width = 30
+          }
+          if (nVal.height <= 30) {
+            nVal.y += nVal.height - 30
+            nVal.height = 30
+          }
+        }
+        if (currentScaleType === 'top_right') {
+          if (nVal.height <= 30) {
+            nVal.y += nVal.height - 30
+            nVal.height = 30
+          }
+          if (nVal.width <= 30)
+            nVal.width = 30
+        }
+        if (currentScaleType === 'bottom_left') {
+          if (nVal.width <= 30) {
+            nVal.x += nVal.width - 30
+            nVal.width = 30
+          }
+          if (nVal.height <= 30)
+            nVal.height = 30
+        }
+        if (currentScaleType === 'bottom_right') {
+          if (nVal.width <= 30)
+            nVal.width = 30
+          if (nVal.height <= 30)
+            nVal.height = 30
+        }
       }
     }
   },
