@@ -12,6 +12,7 @@ const gridCells = ref([
     :grid-cells="gridCells"
     :draggable="true"
     :resizable="true"
+    :adsorbable="true"
     class="h-60vh w-80vw relative border mx-auto"
   >
     <Card

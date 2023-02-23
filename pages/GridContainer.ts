@@ -7,6 +7,12 @@ type ModeTypes = keyof typeof IMode
 
 type ScaleType = 'top' | 'bottom' | 'left' | 'right' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | null
 
+export interface GridContainerProps {
+  gridCells: GridCellsType[]
+  draggable: boolean
+  resizable: boolean
+  adsorbable: boolean
+}
 export interface GridCellsType {
   id: string
   index: number
@@ -38,7 +44,7 @@ export function initGridContainer(
   gridCells: Ref<GridCellsType[]>,
   currentClickedElement: Ref<any>,
   adsorbedLine: Ref<{ l: any[]; mv: any[]; r: any[]; t: any[]; mh: any[]; b: any[] }>,
-  option: any,
+  propsOption: GridContainerProps,
 ) {
   isMouseInContainerOutside = useMouseInElement(containerRef).isOutside
   watch(isMouseInContainerOutside, (v) => {
@@ -228,7 +234,7 @@ export function initGridContainer(
     const disX = (mouseTo.x - mouseFrom.x)
     const disY = (mouseTo.y - mouseFrom.y)
     if (mouseFrom.x !== 0 && mouseFrom.y !== 0 && currentClickedElement.value) {
-      if (transformMode === 'Drag' && option.draggable) {
+      if (transformMode === 'Drag' && propsOption.draggable && propsOption.adsorbable) {
         // currentClickedElement.value.x += disX
         // currentClickedElement.value.y += disY
         // mouseFrom = { x: e.clientX, y: e.clientY }
@@ -344,13 +350,19 @@ export function initGridContainer(
           }
         }
       }
-      else if (transformMode === 'Resize' && option.resizable) {
+      if (transformMode === 'Drag' && propsOption.draggable && !propsOption.adsorbable) {
+        currentClickedElement.value.x += disX
+        currentClickedElement.value.y += disY
+        mouseFrom = { x: e.clientX, y: e.clientY }
+      }
+      else if (transformMode === 'Resize' && propsOption.resizable && propsOption.adsorbable) {
         // 😅 开始变形！~
         if (currentScaleType === 'left') {
           if (adsorbedLine.value.l.length === 0) {
             // 说明没有左边线
             currentClickedElement.value.x += disX
             currentClickedElement.value.width -= disX
+
             adsorbedLine.value.l = []
             mouseFrom = { x: e.clientX, y: e.clientY }
             createAttachedLineForScale()
@@ -804,6 +816,51 @@ export function initGridContainer(
               createAttachedLineForScale()
             }
           }
+        }
+      }
+      else if (transformMode === 'Resize' && propsOption.resizable && !propsOption.adsorbable) {
+        if (currentScaleType === 'left') {
+          currentClickedElement.value.x += disX
+          currentClickedElement.value.width -= disX
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'right') {
+          currentClickedElement.value.width += (mouseTo.x - mouseFrom.x)
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'top') {
+          currentClickedElement.value.y += disY
+          currentClickedElement.value.height -= disY
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'bottom') {
+          currentClickedElement.value.height += (mouseTo.y - mouseFrom.y)
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+
+        if (currentScaleType === 'top_left') {
+          currentClickedElement.value.x += disX
+          currentClickedElement.value.width -= disX
+          currentClickedElement.value.y += disY
+          currentClickedElement.value.height -= disY
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'top_right') {
+          currentClickedElement.value.y += disY
+          currentClickedElement.value.height -= disY
+          currentClickedElement.value.width += (mouseTo.x - mouseFrom.x)
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'bottom_left') {
+          currentClickedElement.value.x += disX
+          currentClickedElement.value.width -= disX
+          currentClickedElement.value.height += (mouseTo.y - mouseFrom.y)
+          mouseFrom = { x: e.clientX, y: e.clientY }
+        }
+        if (currentScaleType === 'bottom_right') {
+          currentClickedElement.value.width += (mouseTo.x - mouseFrom.x)
+          currentClickedElement.value.height += (mouseTo.y - mouseFrom.y)
+          mouseFrom = { x: e.clientX, y: e.clientY }
         }
       }
     }

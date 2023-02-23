@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { GridCellsType } from './GridContainer'
+import type { GridCellsType, GridContainerProps } from './GridContainer'
 import { initGridContainer } from './GridContainer'
 import BoundsSVGContainer from './BoundsSVGContainer.vue'
 
-const props = defineProps({
+const props: GridContainerProps = defineProps({
   gridCells: {
     default: [
       { id: '0', index: 0, x: 0, y: 0, width: 100, height: 100 },
@@ -19,15 +19,8 @@ const props = defineProps({
     default: true,
   },
   // 吸附线
-  adsorbOption: {
-    default: {
-      adsorbCols: true, // 吸附列
-      adsorbRows: true, // 吸附行
-      adsorbedLineStyle: {
-        background: 'green',
-        width: '2px',
-      },
-    },
+  adsorbable: {
+    default: true,
   },
 })
 
