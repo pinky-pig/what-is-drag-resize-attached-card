@@ -23,6 +23,7 @@ const props: GridContainerProps = defineProps({
     default: true,
   },
 })
+const emit = defineEmits(['dragging', 'dragStart', 'dragEnd', 'resizing', 'resizeStart', 'resizeEnd'])
 
 const gridCells = ref(props.gridCells)
 const adsorbedLine: Ref<{ l: any[]; mv: any[];r: any[];t: any[];mh: any[];b: any[] } > = ref({ l: [], mv: [], r: [], t: [], mh: [], b: [] })
@@ -30,7 +31,7 @@ const currentClickedElement: Ref<any> = ref()
 // 1.初始化盒子，给盒子添加鼠标点击事件
 const gridContainerRef = ref()
 onMounted(() => {
-  initGridContainer(gridContainerRef, gridCells, currentClickedElement, adsorbedLine, props)
+  initGridContainer(gridContainerRef, gridCells, currentClickedElement, adsorbedLine, props, emit)
 })
 </script>
 

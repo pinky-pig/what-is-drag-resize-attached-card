@@ -23,6 +23,11 @@ const CELLS = [
 ]
 
 const gridCells = ref(CELLS)
+
+const print = (val: string, e: any) => {
+  // eslint-disable-next-line no-console
+  console.log(val, e)
+}
 </script>
 
 <template>
@@ -32,6 +37,12 @@ const gridCells = ref(CELLS)
     :resizable="true"
     :adsorbable="true"
     class="h-60vh w-80vw relative border mx-auto"
+    @dragging="print('dragging', $event)"
+    @drag-start="print('drag-start', $event)"
+    @drag-end="print('drag-end', $event)"
+    @resizing="print('dragging', $event)"
+    @resize-start="print('resize-start', $event)"
+    @resize-end="print('resize-end', $event)"
   />
 </template>
 

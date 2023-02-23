@@ -1,4 +1,5 @@
 enum IMode {
+  None = 'None',
   Drag = 'Drag',
   Rotate = 'Rotate',
   Resize = 'Resize',
@@ -23,7 +24,7 @@ export interface GridCellsType {
   [key: string]: any
 }
 
-let transformMode: ModeTypes | null = null
+const transformMode: Ref< ModeTypes> = ref('None')
 let currentScaleType: ScaleType = null
 const DEVIATION = 5
 let mouseFrom = { x: 0, y: 0 }
@@ -45,16 +46,18 @@ export function initGridContainer(
   currentClickedElement: Ref<any>,
   adsorbedLine: Ref<{ l: any[]; mv: any[]; r: any[]; t: any[]; mh: any[]; b: any[] }>,
   propsOption: GridContainerProps,
+  emit: any,
 ) {
   isMouseInContainerOutside = useMouseInElement(containerRef).isOutside
+
   watch(isMouseInContainerOutside, (v) => {
     // if (v)
-    //   transformMode = null
+    //   transformMode = 'None'
   })
   watch(currentClickedElement, (nVal, oVal) => {
     if (nVal) {
       // 1.拖拽最贴边 最大
-      if (transformMode === 'Drag') {
+      if (transformMode.value === 'Drag') {
         if (nVal.x < elementLimitSize.x)
           nVal.x = elementLimitSize.x
         if (nVal.y < elementLimitSize.y)
@@ -64,7 +67,7 @@ export function initGridContainer(
         if ((nVal.y + nVal.height) > elementLimitSize.height)
           nVal.y = elementLimitSize.height - nVal.height
       }
-      if (transformMode === 'Resize') {
+      if (transformMode.value === 'Resize') {
         // 2.缩放最贴边 最大
         // 最左，并且缩放的是左边
         if (nVal.x < elementLimitSize.x && currentScaleType === 'left') {
@@ -180,6 +183,17 @@ export function initGridContainer(
     deep: true,
   })
 
+  watch(transformMode, (v, o) => {
+    if (v === 'Drag')
+      emit('dragStart', currentClickedElement.value)
+    else if (v === 'None' && o === 'Drag')
+      emit('dragEnd', gridCells.value)
+    if (v === 'Resize')
+      emit('resizeStart', currentClickedElement.value)
+    else if (v === 'None' && o === 'Resize')
+      emit('resizeEnd', gridCells.value)
+  })
+
   useResizeObserver(containerRef, (entries) => {
     const entry = entries[0]
     const bounds = entry.contentRect
@@ -206,12 +220,12 @@ export function initGridContainer(
     if (initElement && initElement?.id.startsWith('bounds_') && currentClickedElement.value) {
       // 进行尺寸改变的点
       if (initElement?.id.endsWith('_scale')) {
-        transformMode = 'Resize'
+        transformMode.value = 'Resize'
         const tp = initElement?.id?.slice(7).match(/_(.*)_/)
         currentScaleType = tp && tp[1] as ScaleType
       }
       else if (initElement?.id.endsWith('_rotate')) {
-        transformMode = 'Rotate'
+        transformMode.value = 'Rotate'
       }
     }
     else {
@@ -220,7 +234,7 @@ export function initGridContainer(
 
       // 将点击的 block 置顶
       if (currentClickedElement.value) {
-        transformMode = 'Drag'
+        transformMode.value = 'Drag'
         const index = gridCells.value.findIndex((ele: { id: any }) => ele.id === currentClickedElement.value.id)
         if (index !== -1) {
           const ele = gridCells.value.splice(index, 1)
@@ -234,7 +248,7 @@ export function initGridContainer(
     const disX = (mouseTo.x - mouseFrom.x)
     const disY = (mouseTo.y - mouseFrom.y)
     if (mouseFrom.x !== 0 && mouseFrom.y !== 0 && currentClickedElement.value) {
-      if (transformMode === 'Drag' && propsOption.draggable && propsOption.adsorbable) {
+      if (transformMode.value === 'Drag' && propsOption.draggable && propsOption.adsorbable) {
         // currentClickedElement.value.x += disX
         // currentClickedElement.value.y += disY
         // mouseFrom = { x: e.clientX, y: e.clientY }
@@ -349,13 +363,15 @@ export function initGridContainer(
             createAttachedLineForDrag('b')
           }
         }
+        emit('dragging', currentClickedElement.value)
       }
-      if (transformMode === 'Drag' && propsOption.draggable && !propsOption.adsorbable) {
+      if (transformMode.value === 'Drag' && propsOption.draggable && !propsOption.adsorbable) {
         currentClickedElement.value.x += disX
         currentClickedElement.value.y += disY
         mouseFrom = { x: e.clientX, y: e.clientY }
+        emit('dragging', currentClickedElement.value)
       }
-      else if (transformMode === 'Resize' && propsOption.resizable && propsOption.adsorbable) {
+      else if (transformMode.value === 'Resize' && propsOption.resizable && propsOption.adsorbable) {
         // 😅 开始变形！~
         if (currentScaleType === 'left') {
           if (adsorbedLine.value.l.length === 0) {
@@ -817,8 +833,9 @@ export function initGridContainer(
             }
           }
         }
+        emit('resizing', currentClickedElement.value)
       }
-      else if (transformMode === 'Resize' && propsOption.resizable && !propsOption.adsorbable) {
+      else if (transformMode.value === 'Resize' && propsOption.resizable && !propsOption.adsorbable) {
         if (currentScaleType === 'left') {
           currentClickedElement.value.x += disX
           currentClickedElement.value.width -= disX
@@ -862,11 +879,12 @@ export function initGridContainer(
           currentClickedElement.value.height += (mouseTo.y - mouseFrom.y)
           mouseFrom = { x: e.clientX, y: e.clientY }
         }
+        emit('resizing', currentClickedElement.value)
       }
     }
   }
   function mouseup(_e: MouseEvent) {
-    transformMode = null
+    transformMode.value = 'None'
     mouseFrom.x = 0
     mouseFrom.y = 0
     for (const key in adsorbedLine.value)
