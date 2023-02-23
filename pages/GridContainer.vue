@@ -24,12 +24,7 @@ const props: GridContainerProps = defineProps({
 })
 const emit = defineEmits(['dragging', 'dragStart', 'dragEnd', 'resizing', 'resizeStart', 'resizeEnd'])
 
-const gridCells = ref(props.gridCells.map((cell) => {
-  return Object.assign(
-    cell,
-    { component: importComponent(cell.component) },
-  )
-}))
+const gridCells = ref(props.gridCells)
 
 const adsorbedLine: Ref<{ l: any[]; mv: any[];r: any[];t: any[];mh: any[];b: any[] } > = ref({ l: [], mv: [], r: [], t: [], mh: [], b: [] })
 const currentClickedElement: Ref<any> = ref()
@@ -38,9 +33,6 @@ const gridContainerRef = ref()
 onMounted(() => {
   initGridContainer(gridContainerRef, gridCells, currentClickedElement, adsorbedLine, props, emit)
 })
-function importComponent(path: string) {
-  return shallowRef(defineAsyncComponent(() => import(path)))
-}
 </script>
 
 <template>
