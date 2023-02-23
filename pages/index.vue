@@ -40,7 +40,7 @@ const print = (val: string, e: any) => {
     @dragging="print('dragging', $event)"
     @drag-start="print('drag-start', $event)"
     @drag-end="print('drag-end', $event)"
-    @resizing="print('dragging', $event)"
+    @resizing="print('resizing', $event)"
     @resize-start="print('resize-start', $event)"
     @resize-end="print('resize-end', $event)"
   />
