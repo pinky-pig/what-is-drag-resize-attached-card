@@ -7,6 +7,16 @@ type ModeTypes = keyof typeof IMode
 
 type ScaleType = 'top' | 'bottom' | 'left' | 'right' | 'top_left' | 'top_right' | 'bottom_left' | 'bottom_right' | null
 
+export interface GridCellsType {
+  id: string
+  index: number
+  x: number
+  y: number
+  width: number
+  height: number
+  [key: string]: any
+}
+
 let transformMode: ModeTypes | null = null
 let currentScaleType: ScaleType = null
 const DEVIATION = 5
@@ -25,7 +35,7 @@ const elementLimitSize = {
 }
 export function initGridContainer(
   containerRef: Ref<HTMLElement>,
-  gridCells: Ref<{ id: string; x: number; y: number; width: number; height: number }[]>,
+  gridCells: Ref<GridCellsType[]>,
   currentClickedElement: Ref<any>,
   adsorbedLine: Ref<{ l: any[]; mv: any[]; r: any[]; t: any[]; mh: any[]; b: any[] }>,
   option: any,
@@ -132,7 +142,7 @@ export function initGridContainer(
       // 将点击的 block 置顶
       if (currentClickedElement.value) {
         transformMode = 'Drag'
-        const index = gridCells.value.findIndex(ele => ele.id === currentClickedElement.value.id)
+        const index = gridCells.value.findIndex((ele: { id: any }) => ele.id === currentClickedElement.value.id)
         if (index !== -1) {
           const ele = gridCells.value.splice(index, 1)
           gridCells.value.push(ele[0])
@@ -738,7 +748,7 @@ export function initGridContainer(
     const point = { x: position.x, y: position.y }
     const initElement = document.elementFromPoint(point.x, point.y)
     if (initElement)
-      result = gridCells.value.filter(ele => ele.id === initElement.id)
+      result = gridCells.value.filter((ele: { id: string }) => ele.id === initElement.id)
 
     return result ? result[0] : null
   }
@@ -746,7 +756,7 @@ export function initGridContainer(
   function createAttachedLineForScale() {
     // 每个块有六条线
 
-    gridCells.value.forEach((cell, index) => {
+    gridCells.value.forEach((cell: { id: any; x: number; width: any; y: number; height: any }) => {
       if (cell?.id !== currentClickedElement.value?.id) {
         if (currentScaleType === 'left')
           generateLeftLine()
@@ -862,7 +872,7 @@ export function initGridContainer(
   }
 
   function createAttachedLineForDrag(type?: string) {
-    gridCells.value.forEach((cell, index) => {
+    gridCells.value.forEach((cell: { id: any; x: number; width: any; y: number; height: any }) => {
       if (cell?.id !== currentClickedElement.value?.id) {
         if (type === 'l')
           generateLeftLine()
