@@ -36,7 +36,20 @@ onMounted(() => {
 
 <template>
   <div ref="gridContainerRef">
-    <slot />
+    <component
+      :is="item.component"
+      v-for="item, index in gridCells"
+      :id="`${item.id}`"
+      :key="item.id"
+      v-model="gridCells[index]"
+      class="absolute bg-blue-200 rounded-md flex justify-center items-center text-5xl select-none"
+      :style="{
+        left: `${item.x}px`,
+        top: `${item.y}px`,
+        width: `${item.width}px`,
+        height: `${item.height}px`,
+      }"
+    />
     <BoundsSVGContainer
       v-model="currentClickedElement"
       :current-clicked-element="currentClickedElement"
