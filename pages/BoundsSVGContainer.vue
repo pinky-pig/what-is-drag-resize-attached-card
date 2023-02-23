@@ -363,7 +363,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
   <svg
     v-show="props.currentClickedElement"
     id="boundsSVGContainer"
-    class="pointer-events-none w-full h-full absolute top-0 left-0"
+    style="pointer-events: none;width: 100%;height: 100%;top: 0;left: 0;"
   >
     <!-- bounds -->
     <g>
@@ -379,7 +379,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
       />
     </g>
     <!-- 缩放四边 line -->
-    <g class="pointer-events-auto">
+    <g style="pointer-events: auto;">
       <rect
         v-for="(item) in rectLineData"
         :id="`bounds_${item.name}`"
@@ -396,7 +396,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
     </g>
 
     <!-- 缩放四角 -->
-    <g class="pointer-events-auto">
+    <g style="pointer-events: auto;">
       <rect
         v-for="(item) in rectCornerScaleData"
         :id="`bounds_${item.name}`"
@@ -416,7 +416,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
     <!-- 旋转四角 -->
 
     <!-- 吸附线 -->
-    <g class="pointer-events-auto">
+    <g style="pointer-events: auto;">
       <line
         v-for="(item, index) in Object.values(adsorbedLineData)"
         :key="item.name + index"

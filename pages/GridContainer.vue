@@ -5,8 +5,8 @@ import BoundsSVGContainer from './BoundsSVGContainer.vue'
 const props: GridContainerProps = defineProps({
   gridCells: {
     default: [
-      { id: '0', index: 0, x: 0, y: 0, width: 100, height: 100 },
-      { id: '1', index: 1, x: 300, y: 0, width: 100, height: 100 },
+      { id: '0', index: 0, x: 0, y: 0, width: 100, height: 100, component: '' },
+      { id: '1', index: 1, x: 300, y: 0, width: 100, height: 100, component: '' },
     ] as GridCellsType[],
   },
   // 拖拽
@@ -43,8 +43,8 @@ onMounted(() => {
       :id="`${item.id}`"
       :key="item.id"
       v-model="gridCells[index]"
-      class="absolute bg-blue-200 rounded-md flex justify-center items-center text-5xl select-none"
       :style="{
+        position: 'absolute',
         left: `${item.x}px`,
         top: `${item.y}px`,
         width: `${item.width}px`,
