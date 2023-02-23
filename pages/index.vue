@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import GridContainer from './GridContainer.vue'
 
+import GridCellOne from './GridCellOne.vue'
+import GridCellTwo from './GridCellTwo.vue'
+
+// shallowRef(defineAsyncComponent(() => import('./GridCellOne.vue')))
 const CELLS = [
   {
     id: '0',
@@ -9,7 +13,7 @@ const CELLS = [
     y: 0,
     width: 100,
     height: 100,
-    component: shallowRef(defineAsyncComponent(() => import('./GridCellOne.vue'))),
+    component: markRaw(GridCellOne),
   },
   {
     id: '1',
@@ -18,7 +22,7 @@ const CELLS = [
     y: 0,
     width: 100,
     height: 100,
-    component: shallowRef(defineAsyncComponent(() => import('./GridCellTwo.vue'))),
+    component: markRaw(GridCellTwo),
   },
 ]
 
