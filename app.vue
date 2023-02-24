@@ -29,11 +29,13 @@ html, body , #__nuxt{
   outline: none;
 }
 html.light{
+  --primary-background: black;
   background: #f7f4f0;
   color: black ;
 }
 
 html.dark {
+  --primary-background: #474747;
   background: #171717 !important;
   color: black;
 }

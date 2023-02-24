@@ -10,7 +10,7 @@
     "generate": "nuxi generate"
   },
   "dependencies": {
-    "v3-dragblock": "^1.0.2"
+    "v3-dragblock": "^1.0.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.1",

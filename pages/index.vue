@@ -46,26 +46,22 @@ const color = useColorMode()
 <style scoped>
 .drag-canvas.light{
   --button_radius: 0.75em;
-  --button_color: #000000;
-  --button_outline_color: #000000;
 }
 .drag-canvas.dark{
   --button_radius: 0.75em;
-  --button_color: #474747;
-  --button_outline_color: #fffefc;
 }
 .drag-canvas {
   font-size: 17px;
   font-weight: bold;
   border: none;
-  border-radius: var(--button_radius);
-  background: var(--button_outline_color);
+  border-radius: 0.75em;
+  /* background: black; */
   display: inline-flex;
 }
 .drag-canvas-bottom {
-  border-radius: var(--button_radius);
+  border-radius: 0.75em;
   padding: 10px;
-  background: var(--button_color);
+  background: var(--primary-background);
 }
 
 .V3Dragblock{

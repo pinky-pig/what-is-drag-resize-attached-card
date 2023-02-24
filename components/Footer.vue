@@ -1,5 +1,6 @@
 <template>
   <div
+    select-none
     text="xl gray4"
     m-5
     flex
