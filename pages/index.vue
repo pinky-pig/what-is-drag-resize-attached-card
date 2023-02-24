@@ -2,27 +2,15 @@
 import V3Dragblock from 'v3-dragblock'
 import GridCellOne from '../components/GridCellOne.vue'
 import GridCellTwo from '../components/GridCellTwo.vue'
+import GridCellThree from '../components/GridCellThree.vue'
+import GridCellFour from '../components/GridCellFour.vue'
 // import GridContainer from '~/package/GridContainer.vue'
 // shallowRef(defineAsyncComponent(() => import('./GridCellOne.vue')))
 const CELLS = [
-  {
-    id: '0',
-    index: 0,
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-    component: markRaw(GridCellOne),
-  },
-  {
-    id: '1',
-    index: 0,
-    x: 200,
-    y: 0,
-    width: 100,
-    height: 100,
-    component: markRaw(GridCellTwo),
-  },
+  { id: '0', index: 0, x: 50, y: 0, width: 100, height: 200, component: markRaw(GridCellOne) },
+  { id: '1', index: 0, x: 300, y: 200, width: 150, height: 150, component: markRaw(GridCellTwo) },
+  { id: '2', index: 0, x: 400, y: 400, width: 200, height: 80, component: markRaw(GridCellThree) },
+  { id: '3', index: 0, x: 50, y: 400, width: 100, height: 100, component: markRaw(GridCellFour) },
 ]
 
 const gridCells = ref(CELLS)
