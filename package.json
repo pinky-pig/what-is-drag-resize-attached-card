@@ -9,6 +9,9 @@
     "postinstall": "nuxi prepare",
     "generate": "nuxi generate"
   },
+  "dependencies": {
+    "v3-dragblock": "^1.0.2"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.1",
     "@iconify-json/carbon": "^1.1.14",

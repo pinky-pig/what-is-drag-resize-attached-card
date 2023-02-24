@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import GridCellOne from './GridCellOne.vue'
-import GridCellTwo from './GridCellTwo.vue'
-import GridContainer from '~/package/GridContainer.vue'
-
+import V3Dragblock from 'v3-dragblock'
+import GridCellOne from '../components/GridCellOne.vue'
+import GridCellTwo from '../components/GridCellTwo.vue'
+// import GridContainer from '~/package/GridContainer.vue'
 // shallowRef(defineAsyncComponent(() => import('./GridCellOne.vue')))
 const CELLS = [
   {
@@ -34,12 +34,12 @@ const print = (val: string, e: any) => {
 </script>
 
 <template>
-  <GridContainer
+  <V3Dragblock
     :grid-cells="gridCells"
     :draggable="true"
     :resizable="true"
     :adsorbable="true"
-    class="h-60vh w-80vw relative border mx-auto"
+    style="height: 60vh;width:80vw;position: relative; border-width: 1px; margin-left: auto; margin-right: auto;"
     @dragging="print('dragging', $event)"
     @drag-start="print('drag-start', $event)"
     @drag-end="print('drag-end', $event)"
