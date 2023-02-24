@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import GridContainer from './GridContainer.vue'
-
 import GridCellOne from './GridCellOne.vue'
 import GridCellTwo from './GridCellTwo.vue'
+import GridContainer from '~/package/GridContainer.vue'
 
 // shallowRef(defineAsyncComponent(() => import('./GridCellOne.vue')))
 const CELLS = [

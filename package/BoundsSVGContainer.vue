@@ -365,7 +365,7 @@ function handleAttachedLineMiddleHorizontal(middleHorizontalArr: any[]) {
   <svg
     v-show="props.currentClickedElement"
     id="boundsSVGContainer"
-    style="pointer-events: none;width: 100%;height: 100%;top: 0;left: 0;"
+    style="pointer-events: none;width: 100%;height: 100%;top: 0;left: 0; position: absolute;"
   >
     <!-- bounds -->
     <g>
