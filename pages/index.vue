@@ -55,29 +55,23 @@ const color = useColorMode()
   --button_outline_color: #fffefc;
 }
 .drag-canvas {
- font-size: 17px;
- font-weight: bold;
- border: none;
- border-radius: var(--button_radius);
- background: var(--button_outline_color);
- display: inline-flex;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  display: inline-flex;
 }
 .drag-canvas-bottom {
-  display: block;
-  box-sizing: border-box;
-  border: 0px solid var(--button_outline_color);
   border-radius: var(--button_radius);
   padding: 10px;
   background: var(--button_color);
-  color: var(--button_outline_color);
-  transform: translateY(-0.2em);
-  transition: transform 0.1s ease;
 }
 
 .V3Dragblock{
   background: #f7f4f0;
-  width: 80vw;
-  height: 70vh;
+  width: 75vw;
+  height: 75vh;
   border-radius: 10px;
   border-width: 1px;
   position: relative;

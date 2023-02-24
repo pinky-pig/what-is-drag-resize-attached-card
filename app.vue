@@ -17,9 +17,16 @@ useHead({
 
 <style>
 html, body , #__nuxt{
-  height: 100vh;
-  margin: 0;
-  padding: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-height: 0px;
+  min-width: 0px;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  outline: none;
 }
 html.light{
   background: #f7f4f0;
@@ -27,7 +34,7 @@ html.light{
 }
 
 html.dark {
-  background: #222 !important;
-  color: white;
+  background: #171717 !important;
+  color: black;
 }
 </style>
