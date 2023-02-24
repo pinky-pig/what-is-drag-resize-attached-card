@@ -22,7 +22,7 @@ html, body , #__nuxt{
   padding: 0;
 }
 html.light{
-  background: #FFFEFC;
+  background: #f7f4f0;
   color: black ;
 }
 
