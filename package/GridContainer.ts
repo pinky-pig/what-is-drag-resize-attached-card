@@ -1,5 +1,6 @@
-import { useMouseInElement, useResizeObserver } from "@vueuse/core"
-import { ref, Ref, watch } from "vue"
+import { useMouseInElement, useResizeObserver } from '@vueuse/core'
+import type { Ref } from 'vue'
+import { ref, watch } from 'vue'
 
 enum IMode {
   None = 'None',
@@ -33,7 +34,7 @@ const DEVIATION = 5
 let mouseFrom = { x: 0, y: 0 }
 let mouseTo = { x: 0, y: 0 }
 // 获取盒子 container 范围
-let isMouseInContainerOutside = ref(false)
+const isMouseInContainerOutside = ref(false)
 // const containerRefBounds = { x: 0, y: 0, width: 0, height: 0 }
 // const domBounds = containerRef.value.getBoundingClientRect()
 // Object.assign(containerRefBounds, domBounds)
@@ -51,7 +52,7 @@ export function initGridContainer(
   propsOption: GridContainerProps,
   emit: any,
 ) {
-  isMouseInContainerOutside = useMouseInElement(containerRef).isOutside
+  isMouseInContainerOutside.value = useMouseInElement(containerRef).isOutside.value
 
   watch(isMouseInContainerOutside, (v) => {
     // if (v)

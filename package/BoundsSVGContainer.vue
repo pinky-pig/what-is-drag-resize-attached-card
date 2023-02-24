@@ -1,5 +1,6 @@
 <!-- eslint-disable no-console -->
-<script setup lang="ts">import { computed, ref, watch } from 'vue';
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
 
 interface GridCellType {
   id: string
