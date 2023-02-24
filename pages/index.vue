@@ -28,27 +28,84 @@ const CELLS = [
 const gridCells = ref(CELLS)
 
 const print = (val: string, e: any) => {
-  // eslint-disable-next-line no-console
-  console.log(val, e)
+  // console.log(val, e)
 }
+const color = useColorMode()
 </script>
 
 <template>
-  <V3Dragblock
+  <div :class="color.preference === 'dark' ? 'dark' : 'light'" class="drag-canvas">
+    <div class="drag-canvas-bottom">
+      <!-- <div class="w-800px h-500px bg-red-100" /> -->
+      <V3Dragblock
+        class="V3Dragblock"
+        :grid-cells="gridCells"
+        :draggable="true"
+        :resizable="true"
+        :adsorbable="true"
+        @dragging="print('dragging', $event)"
+        @drag-start="print('drag-start', $event)"
+        @drag-end="print('drag-end', $event)"
+        @resizing="print('resizing', $event)"
+        @resize-start="print('resize-start', $event)"
+        @resize-end="print('resize-end', $event)"
+      />
+    </div>
+  </div>
+  <!-- <V3Dragblock
+    class="V3Dragblock"
     :grid-cells="gridCells"
     :draggable="true"
     :resizable="true"
     :adsorbable="true"
-    style="height: 60vh;width:80vw;position: relative; border-width: 1px; margin-left: auto; margin-right: auto;"
     @dragging="print('dragging', $event)"
     @drag-start="print('drag-start', $event)"
     @drag-end="print('drag-end', $event)"
     @resizing="print('resizing', $event)"
     @resize-start="print('resize-start', $event)"
     @resize-end="print('resize-end', $event)"
-  />
+  /> -->
 </template>
 
 <style scoped>
+.drag-canvas.light{
+  --button_radius: 0.75em;
+  --button_color: #fffefc;
+  --button_outline_color: #000000;
+}
+.drag-canvas.dark{
+  --button_radius: 0.75em;
+  --button_color: #474747;
+  --button_outline_color: #fffefc;
+}
+.drag-canvas {
+ font-size: 17px;
+ font-weight: bold;
+ border: none;
+ border-radius: var(--button_radius);
+ background: var(--button_outline_color);
+ display: inline-flex;
+}
+.drag-canvas-bottom {
+ display: block;
+ box-sizing: border-box;
+ border: 2px solid var(--button_outline_color);
+ border-radius: var(--button_radius);
+ padding: 10px;
+ background: var(--button_color);
+ color: var(--button_outline_color);
+ transform: translateY(-0.2em);
+ transition: transform 0.1s ease;
+}
 
+.V3Dragblock{
+  width: 80vw;
+  height: 70vh;
+  border-radius: 10px;
+  border-width: 1px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
 </style>
