@@ -15,11 +15,17 @@ const CELLS = [
 ]
 
 const gridCells = ref(CELLS)
+
+const adsorbLineStyle = {
+  stroke: 'black',
+  fill: 'black',
+  strokeWidth: 2,
+}
+
 const print = (val: string, e: any) => {
   // eslint-disable-next-line no-console
   console.log(val, e)
 }
-
 // initLastLayout()
 // /**
 //  * 从JSON中获取Layout
@@ -57,6 +63,7 @@ const color = useColorMode()
         :draggable="true"
         :resizable="true"
         :adsorbable="true"
+        :adsorb-line-style="adsorbLineStyle"
         @dragging="print('dragging', $event)"
         @drag-start="print('drag-start', $event)"
         @drag-end="save('drag-end', $event)"
