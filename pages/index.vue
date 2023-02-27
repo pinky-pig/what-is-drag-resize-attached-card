@@ -16,8 +16,33 @@ const CELLS = [
 
 const gridCells = ref(CELLS)
 const print = (val: string, e: any) => {
-  if (val === 'drag-end' || val === 'resize-end')
-    window.localStorage.setItem('layoutJSON', JSON.stringify(e))
+  // eslint-disable-next-line no-console
+  console.log(val, e)
+}
+
+// initLastLayout()
+// /**
+//  * 从JSON中获取Layout
+//  */
+// function initLastLayout() {
+//   const lastLayoutJSON = localStorage.getItem('layoutJSON')
+//   if (lastLayoutJSON) {
+//     const lastLayout = JSON.parse(lastLayoutJSON)
+//     for (let i = 0; i < lastLayout.length; i++) {
+//       for (let j = 0; j < gridCells.value.length; j++) {
+//         if (lastLayout[i].id === gridCells.value[j].id)
+//           Object.assign(gridCells.value[j], lastLayout[i])
+//       }
+//     }
+//   }
+// }
+/**
+ * 存储到JSON
+ */
+const save = (val: string, e: any) => {
+  if (val === 'drag-end' || val === 'resize-end') {
+    // localStorage.setItem('layoutJSON', JSON.stringify(e))
+  }
 }
 
 const color = useColorMode()
@@ -34,10 +59,10 @@ const color = useColorMode()
         :adsorbable="true"
         @dragging="print('dragging', $event)"
         @drag-start="print('drag-start', $event)"
-        @drag-end="print('drag-end', $event)"
+        @drag-end="save('drag-end', $event)"
         @resizing="print('resizing', $event)"
         @resize-start="print('resize-start', $event)"
-        @resize-end="print('resize-end', $event)"
+        @resize-end="save('resize-end', $event)"
       />
     </div>
   </div>
